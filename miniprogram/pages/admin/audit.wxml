@@ -1,0 +1,44 @@
+<view class="page">
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索操作人/动作" value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" bindconfirm="search" />
+    <button class="search-btn" bindtap="search">搜索</button>
+  </view>
+
+  <scroll-view class="filter-scroll" scroll-x enable-flex>
+    <view wx:for="{{actionOptions}}" wx:key="key" class="filter-chip {{actionFilter === item.key ? 'active' : ''}}" bindtap="setActionFilter" data-key="{{item.key}}">{{item.label}}</view>
+  </scroll-view>
+
+  <view class="stat-bar" wx:if="{{total}}">共 {{total}} 条记录</view>
+
+  <view class="card log-card" wx:for="{{logs}}" wx:key="id" bindtap="openDetail" data-id="{{item.id}}">
+    <view class="log-head">
+      <text class="log-action">{{item.actionLabel}}</text>
+      <text class="log-time">{{item.timeLabel}}</text>
+    </view>
+    <view class="log-body">
+      <view class="log-row"><text class="muted">操作人</text><text>{{item.actorName}} <text class="role-tag">{{item.roleLabel}}</text></text></view>
+      <view class="log-row" wx:if="{{item.payloadSummary}}"><text class="muted">详情</text><text class="payload">{{item.payloadSummary}}</text></view>
+    </view>
+  </view>
+
+  <view wx:if="{{!logs.length && !loading}}" class="empty-state">暂无审计记录</view>
+  <view wx:if="{{loading}}" class="loading">加载中…</view>
+  <view wx:if="{{!hasMore && logs.length > 0}}" class="no-more">— 已全部加载 —</view>
+
+  <view class="modal-mask" wx:if="{{showDetail}}" bindtap="closeDetail"></view>
+  <view class="modal-panel" wx:if="{{showDetail}}">
+    <view class="modal-title">审计详情</view>
+    <view class="modal-body" wx:if="{{detailItem}}">
+      <view class="modal-row"><text class="modal-label">动作</text><text class="modal-value">{{detailItem.action}}（{{detailItem.actionLabel}}）</text></view>
+      <view class="modal-row"><text class="modal-label">操作人</text><text class="modal-value">{{detailItem.actorId || '-'}}</text></view>
+      <view class="modal-row"><text class="modal-label">角色</text><text class="modal-value">{{detailItem.roleLabel}}</text></view>
+      <view class="modal-row"><text class="modal-label">时间</text><text class="modal-value">{{detailItem.timeLabel}}</text></view>
+      <view class="modal-row"><text class="modal-label">OpenID</text><text class="modal-value mono">{{detailItem.openid || '-'}}</text></view>
+      <view class="modal-row"><text class="modal-label">载荷</text></view>
+      <view class="modal-payload mono">{{detailItem.payloadJson}}</view>
+    </view>
+    <view class="modal-actions">
+      <button class="ghost" bindtap="closeDetail">关闭</button>
+    </view>
+  </view>
+</view>

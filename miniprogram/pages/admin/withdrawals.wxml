@@ -1,0 +1,78 @@
+<view class="page withdrawals-page">
+  <view class="withdraw-head">
+    <view>
+      <view class="eyebrow">资金管理</view>
+      <view class="page-title">提现管理</view>
+    </view>
+    <button class="refresh-button" bindtap="refresh" aria-label="刷新提现列表">↻</button>
+  </view>
+
+  <view class="summary-layout">
+    <view class="summary-main">
+      <view class="summary-label">待处理金额</view>
+      <view class="summary-amount">¥{{summary.pendingAmount}}</view>
+      <view class="summary-foot"><text>{{summary.pendingCount}} 笔待审核</text><text>{{summary.toPayCount}} 笔待打款</text></view>
+    </view>
+    <view class="summary-side">
+      <view class="mini-summary"><text>已完成</text><text class="mini-value">{{summary.completedCount}} 笔</text></view>
+      <view class="mini-summary"><text>已驳回</text><text class="mini-value muted-value">{{summary.rejectedCount}} 笔</text></view>
+    </view>
+  </view>
+
+  <view class="search-box">
+    <image src="/images/icons/search.svg" mode="aspectFit" />
+    <input value="{{keyword}}" bindinput="onKeywordInput" confirm-type="search" placeholder="搜索代理人、提现单号" />
+    <text wx:if="{{keyword}}" class="clear-search" bindtap="clearKeyword">×</text>
+  </view>
+
+  <scroll-view class="status-tabs" scroll-x="true" enhanced="true" show-scrollbar="false">
+    <view class="status-tab {{filter === '全部' ? 'active' : ''}}" bindtap="setFilter" data-filter="全部"><text>全部</text><text class="tab-count">{{counts.all}}</text></view>
+    <view class="status-tab {{filter === '待审核' ? 'active' : ''}}" bindtap="setFilter" data-filter="待审核"><text>待审核</text><text class="tab-count">{{counts.pending}}</text></view>
+    <view class="status-tab {{filter === '待打款' ? 'active' : ''}}" bindtap="setFilter" data-filter="待打款"><text>待打款</text><text class="tab-count">{{counts.toPay}}</text></view>
+    <view class="status-tab {{filter === '已完成' ? 'active' : ''}}" bindtap="setFilter" data-filter="已完成"><text>已完成</text><text class="tab-count">{{counts.completed}}</text></view>
+    <view class="status-tab {{filter === '已驳回' ? 'active' : ''}}" bindtap="setFilter" data-filter="已驳回"><text>已驳回</text><text class="tab-count">{{counts.rejected}}</text></view>
+  </scroll-view>
+
+  <view class="list-head"><text>{{filter === '全部' ? '全部提现' : filter}}</text><text class="list-total">{{withdrawals.length}} 笔</text></view>
+  <view wx:if="{{withdrawals.length}}">
+    <view class="withdraw-card" wx:for="{{withdrawals}}" wx:key="id" bindtap="openDetail" data-id="{{item.id}}">
+      <view class="card-top">
+        <view class="agent-line"><view><view class="agent-name">{{item.agentName}}</view><view class="card-time">{{item.createdAt}}</view></view></view>
+        <text class="status-tag {{item.statusClass}}">{{item.status}}</text>
+      </view>
+      <view class="amount-line"><text class="amount">¥{{item.amount}}</text><text class="withdraw-id">{{item.id}}</text></view>
+      <view class="meta-line"><text>{{item.method}}</text><text>{{item.maskedAccount}}</text></view>
+      <view wx:if="{{item.note}}" class="note-line">备注：{{item.note}}</view>
+      <view wx:if="{{item.canReview || item.canPay}}" class="card-actions" catchtap="stopPropagation">
+        <button wx:if="{{item.canReview}}" class="action-secondary" catchtap="reject" data-id="{{item.id}}">驳回</button>
+        <button wx:if="{{item.canReview}}" class="action-primary" catchtap="approve" data-id="{{item.id}}">通过审核</button>
+        <button wx:if="{{item.canPay}}" class="action-primary full" catchtap="paid" data-id="{{item.id}}">记录已打款</button>
+      </view>
+      <view wx:if="{{!item.canReview && !item.canPay}}" class="detail-hint">查看提现详情 <text>›</text></view>
+    </view>
+  </view>
+  <view wx:else class="empty-state"><view class="empty-icon">⌕</view><view>没有找到提现记录</view><text wx:if="{{keyword}}">试试更换代理人或单号</text><text wx:else>当前筛选下暂无数据</text></view>
+
+  <view wx:if="{{detailVisible}}" class="modal-mask" catchtap="closeDetail">
+    <view class="detail-sheet" catchtap="stopPropagation">
+      <view class="sheet-head"><view><view class="sheet-title">提现详情</view><view class="sheet-id">{{selected.id}}</view></view><text class="sheet-close" catchtap="closeDetail">×</text></view>
+      <view class="detail-hero"><view class="detail-amount">¥{{selected.amount}}</view><text class="status-tag {{selected.statusClass}}">{{selected.status}}</text></view>
+      <view class="detail-section">
+        <view class="detail-row"><text>代理人</text><text>{{selected.agentName}}</text></view>
+        <view class="detail-row"><text>提现方式</text><text>{{selected.method}}</text></view>
+        <view class="detail-row"><text>收款账号</text><text>{{selected.maskedAccount}}</text></view>
+        <view class="detail-row"><text>申请时间</text><text>{{selected.createdAt}}</text></view>
+        <view wx:if="{{selected.reviewedAt}}" class="detail-row"><text>审核时间</text><text>{{selected.reviewedAt}}</text></view>
+        <view wx:if="{{selected.paidAt}}" class="detail-row"><text>打款时间</text><text>{{selected.paidAt}}</text></view>
+        <view wx:if="{{selected.note}}" class="detail-note"><text>申请备注</text><text>{{selected.note}}</text></view>
+      </view>
+      <view wx:if="{{selected.canReview || selected.canPay}}" class="sheet-actions">
+        <button wx:if="{{selected.canReview}}" class="action-secondary" bindtap="reject" data-id="{{selected.id}}">驳回申请</button>
+        <button wx:if="{{selected.canReview}}" class="action-primary" bindtap="approve" data-id="{{selected.id}}">通过审核</button>
+        <button wx:if="{{selected.canPay}}" class="action-primary full" bindtap="paid" data-id="{{selected.id}}">记录已打款</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="bottom-nav"><view class="bottom-tab" bindtap="home"><image class="nav-icon" src="/images/icons/home.png" mode="aspectFit"/><text>首页</text></view><view class="bottom-tab" bindtap="orders"><image class="nav-icon" src="/images/icons/goods.png" mode="aspectFit"/><text>订单</text></view><view class="bottom-tab active"><image class="nav-icon" src="/images/icons/usercenter-active.png" mode="aspectFit"/><text>提现</text></view><view class="bottom-tab" bindtap="settings"><image class="nav-icon" src="/images/icons/setting.svg" mode="aspectFit"/><text>我的</text></view></view>
+</view>

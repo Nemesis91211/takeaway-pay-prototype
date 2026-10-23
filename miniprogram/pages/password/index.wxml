@@ -1,0 +1,20 @@
+<view class="password-page">
+  <view wx:if="{{force}}" class="password-notice">首次登录需要修改初始密码</view>
+  <view class="card password-card">
+    <view class="field">
+      <text class="label">原密码</text>
+      <input class="input" password data-key="oldPassword" value="{{oldPassword}}" bindinput="onInput" maxlength="40" placeholder="请输入当前密码" />
+    </view>
+    <view class="field">
+      <text class="label">新密码</text>
+      <input class="input" password data-key="newPassword" value="{{newPassword}}" bindinput="onInput" maxlength="40" placeholder="至少 8 位" />
+    </view>
+    <view class="field">
+      <text class="label">确认新密码</text>
+      <input class="input" password data-key="confirmPassword" value="{{confirmPassword}}" bindinput="onInput" maxlength="40" placeholder="请再次输入新密码" />
+    </view>
+    <view wx:if="{{error}}" class="password-error">{{error}}</view>
+    <button class="primary" bindtap="submit" loading="{{loading}}" disabled="{{loading}}">保存新密码</button>
+  </view>
+  <view wx:if="{{!force}}" class="password-back"><button class="ghost" bindtap="cancel">取消</button></view>
+</view>

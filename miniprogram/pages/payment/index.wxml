@@ -1,0 +1,12 @@
+<view class="payment-page" style="--primary: {{theme.primary}}; --primary-text: {{theme.primaryText}};">
+  <view class="payment-summary">
+    <view class="time-line">支付剩余时间<text class="time-value">{{status.countdown}}</text></view>
+    <view class="payment-amount"><text>¥</text>{{order.activeAmount}}</view>
+    <view class="merchant-line">{{order.activeMerchant}} <text>订单详情 ›</text></view>
+  </view>
+  <view class="method-card">
+    <view class="method-left"><view class="method-icon"><view class="method-bubble"></view></view><text>微信支付</text></view>
+    <view class="selected-icon">✓</view>
+  </view>
+  <button class="confirm-button" bindtap="confirmForTest" disabled="{{status.expired}}">{{status.expired ? '订单已取消' : '确认支付'}}</button>
+</view>

@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/login/index",
+    "pages/password/index",
+    "pages/admin/index",
+    "pages/admin/create",
+    "pages/admin/orders",
+    "pages/admin/search",
+    "pages/admin/review",
+    "pages/admin/merchants",
+    "pages/admin/admins",
+    "pages/admin/withdrawals",
+    "pages/admin/settings",
+    "pages/admin/audit",
+    "pages/merchant/index",
+    "pages/merchant/create",
+    "pages/merchant/orders",
+    "pages/merchant/wallet",
+    "pages/merchant/withdraw",
+    "pages/merchant/settings",
+    "pages/index/index",
+    "pages/payment/index"
+  ],
+  "window": {
+    "backgroundColor": "#F4F5F6",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTitleText": "登录",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

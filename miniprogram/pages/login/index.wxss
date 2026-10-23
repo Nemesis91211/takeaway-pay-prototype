@@ -1,0 +1,9 @@
+.login-page { min-height: 100vh; padding: 90rpx 40rpx 60rpx; box-sizing: border-box; background: #f5f6f8; }
+.login-brand { display: flex; flex-direction: column; align-items: center; margin-bottom: 46rpx; }
+.brand-icon { display: flex; align-items: center; justify-content: center; width: 112rpx; height: 112rpx; border-radius: 34rpx; background: #fff1b6; }
+.brand-icon image { width: 62rpx; height: 62rpx; }
+.brand-title { margin-top: 22rpx; color: #202124; font-size: 40rpx; font-weight: 700; letter-spacing: 1rpx; }
+.login-card { padding: 30rpx 28rpx 34rpx; border-radius: 24rpx; }
+.login-card .primary { margin-top: 30rpx; }
+.login-error { margin-top: 18rpx; padding: 14rpx 18rpx; border-radius: 12rpx; background: #ffebeb; color: #b84c4c; font-size: 24rpx; line-height: 34rpx; }
+.login-foot { margin-top: 28rpx; color: #a1a4a8; font-size: 23rpx; text-align: center; }

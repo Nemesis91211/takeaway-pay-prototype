@@ -1,0 +1,4 @@
+@import "./merchants.wxss";
+.self-tag { margin-left: 10rpx; padding: 3rpx 10rpx; border-radius: 8rpx; background: #fff1b6; color: #8a6500; font-size: 19rpx; font-weight: 500; }
+.admin-actions { display: flex; gap: 12rpx; margin-top: 18rpx; }
+.admin-actions button { flex: 1; margin: 0; padding: 0; height: 64rpx; line-height: 64rpx; font-size: 23rpx; }

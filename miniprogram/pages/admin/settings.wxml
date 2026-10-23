@@ -1,0 +1,38 @@
+<view class="page">
+  <view class="dashboard-head"><view><view class="head-title">我的</view><view class="head-caption">管理员账号与管理入口</view></view></view>
+  <view class="card profile-card"><view class="profile-avatar" bindtap="changeAvatar"><image wx:if="{{user.avatar}}" class="profile-avatar-img" src="{{user.avatar}}" mode="aspectFill"/></view><view class="profile-summary"><view class="card-title">{{user.name || user.username}}</view><view class="muted">{{user.phone || '未填写手机号'}} · {{user.email || '未填写邮箱'}}</view></view><view class="setting-value" bindtap="editProfile">编辑 ›</view></view>
+  <view class="section-head"><view class="section-title">个人信息</view><view class="section-link" bindtap="editProfile">编辑</view></view>
+  <view class="card settings-list profile-settings">
+    <view class="setting-row"><view><view class="setting-name">管理员姓名</view><view class="setting-meta">{{user.name || '未填写'}}</view></view><view class="setting-value" bindtap="editProfile">修改 ›</view></view>
+    <view class="setting-row"><view><view class="setting-name">联系手机号</view><view class="setting-meta">{{user.phone || '未填写'}}</view></view><view class="setting-value" bindtap="editProfile">修改 ›</view></view>
+    <view class="setting-row"><view><view class="setting-name">邮箱地址</view><view class="setting-meta">{{user.email || '未填写'}}</view></view><view class="setting-value" bindtap="editProfile">修改 ›</view></view>
+    <view class="setting-row"><view><view class="setting-name">所属部门</view><view class="setting-meta">{{user.department || '未填写'}}</view></view><view class="setting-value" bindtap="editProfile">修改 ›</view></view>
+    <view class="setting-row"><view><view class="setting-name">登录账号</view><view class="setting-meta">{{user.username}}</view></view><view class="setting-value readonly">不可修改</view></view>
+    <view class="setting-row"><view><view class="setting-name">账号权限</view><view class="setting-meta">{{roleLabel}} · {{isSuper ? '可创建管理员账号' : '全部业务与设置'}}</view></view><view class="setting-value readonly">系统分配</view></view>
+  </view>
+  <view wx:if="{{showProfileEditor}}" class="modal-mask"><view class="modal-card profile-modal"><view class="modal-title">编辑个人信息</view><view class="modal-subtitle">登录账号和权限由系统管理，不支持修改</view><view class="field"><text class="label">管理员姓名 <text class="required">*</text></text><input class="input" data-key="name" bindinput="inputProfile" value="{{profileForm.name}}" maxlength="30" placeholder="请输入姓名" /></view><view class="field"><text class="label">联系手机号 <text class="optional">选填</text></text><input class="input" type="number" data-key="phone" bindinput="inputProfile" value="{{profileForm.phone}}" maxlength="20" placeholder="请输入手机号" /></view><view class="field"><text class="label">邮箱地址 <text class="optional">选填</text></text><input class="input" data-key="email" bindinput="inputProfile" value="{{profileForm.email}}" maxlength="80" placeholder="用于接收运营通知" /></view><view class="field"><text class="label">所属部门 <text class="optional">选填</text></text><input class="input" data-key="department" bindinput="inputProfile" value="{{profileForm.department}}" maxlength="40" placeholder="例如：平台运营部" /></view><view class="modal-actions"><button class="ghost" bindtap="cancelProfile">取消</button><button class="primary" bindtap="saveProfile">保存</button></view></view></view>
+  <view class="section-head"><view class="section-title">管理入口</view></view>
+  <view class="card my-entry-card" bindtap="merchants"><view class="my-entry-icon"><image src="/images/icons/business-active.png" mode="aspectFit"/></view><view class="my-entry-copy"><view class="card-title">代理人管理</view><view class="muted">查看代理人状态、订单、结算与余额</view></view><view class="my-entry-arrow">›</view></view>
+  <view wx:if="{{isSuper}}" class="card my-entry-card" bindtap="admins"><view class="my-entry-icon"><image src="/images/icons/usercenter-active.png" mode="aspectFit"/></view><view class="my-entry-copy"><view class="card-title">管理员账号管理</view><view class="muted">在线开通管理员、停用账号、重置密码</view></view><view class="my-entry-arrow">›</view></view>
+  <view class="section-head"><view class="section-title">账号安全</view></view>
+  <view class="card settings-list">
+    <view class="setting-row" bindtap="changePassword"><view><view class="setting-name">修改登录密码</view><view class="setting-meta">定期更换密码，避免多人共用</view></view><view class="setting-value">修改 ›</view></view>
+    <view class="setting-row" bindtap="logout"><view><view class="setting-name">退出登录</view><view class="setting-meta">退出后需要重新输入账号密码</view></view><view class="setting-value">退出 ›</view></view>
+  </view>
+  <view class="section-head"><view class="section-title">平台设置</view></view>
+  <view class="card settings-list">
+    <view class="setting-row"><view><view class="setting-name">付款审核后结算</view><view class="setting-meta">审核通过才进入代理人余额</view></view><view class="setting-value" bindtap="choose" data-type="review">{{settings.reviewMode}} ›</view></view>
+    <view class="setting-row"><view><view class="setting-name">默认收款账户</view><view class="setting-meta">客户付款统一进入平台账户</view></view><view class="setting-value" bindtap="choose" data-type="payout">{{settings.payoutAccount}} ›</view></view>
+    <view class="setting-row"><view><view class="setting-name">代理人提现权限</view><view class="setting-meta">允许代理人提交提现申请</view></view><switch checked="{{settings.merchantWithdrawEnabled}}" color="#c49a00" bindchange="toggle" /></view>
+  </view>
+  <view class="section-head"><view class="section-title">运营监控</view></view>
+  <view class="card settings-list">
+    <view class="setting-row"><view><view class="setting-name">待审核提醒</view><view class="setting-meta">代理人待审核订单达到阈值时提醒</view></view><switch checked="{{settings.notifyOnPending}}" color="#c49a00" bindchange="toggleNotify" /></view>
+    <view class="setting-row" bindtap="threshold"><view><view class="setting-name">待审核预警阈值</view><view class="setting-meta">当前为 {{settings.pendingAlertThreshold}} 笔</view></view><view class="setting-value">修改 ›</view></view>
+    <view class="setting-row" bindtap="choose" data-type="timeout"><view><view class="setting-name">审核超时处理</view><view class="setting-meta">付款后十分钟无人处理时自动执行</view></view><view class="setting-value">{{settings.reviewTimeoutAction}} ›</view></view>
+    <view class="setting-row" bindtap="audit"><view><view class="setting-name">操作审计记录</view><view class="setting-meta">查看管理员审核与账号变更记录</view></view><view class="setting-value">查看 ›</view></view>
+    <view class="setting-row" bindtap="cleanup"><view><view class="setting-name">清理过期订单</view><view class="setting-meta">取消超时未付款订单 + 自动处理审核超时订单</view></view><view class="setting-value">执行 ›</view></view>
+  </view>
+  <button class="primary" bindtap="save">保存设置</button>
+  <view class="bottom-nav"><view class="bottom-tab" bindtap="home"><image class="nav-icon" src="/images/icons/home.png" mode="aspectFit"/><text>首页</text></view><view class="bottom-tab" bindtap="orders"><image class="nav-icon" src="/images/icons/goods.png" mode="aspectFit"/><text>订单</text></view><view class="bottom-tab" bindtap="withdrawals"><image class="nav-icon" src="/images/icons/usercenter.png" mode="aspectFit"/><text>提现</text></view><view class="bottom-tab active"><image class="nav-icon" src="/images/icons/setting.svg" mode="aspectFit"/><text>我的</text></view></view>
+</view>

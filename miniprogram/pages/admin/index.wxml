@@ -1,0 +1,39 @@
+<view class="page admin-page">
+  <view class="admin-head">
+    <view>
+      <view class="admin-kicker">今日运营</view>
+      <view class="admin-title">管理工作台</view>
+    </view>
+    <view class="admin-head-action" bindtap="reviews">
+      <image src="/images/icons/examples.png" mode="aspectFit" />
+      <view wx:if="{{pending + withdraw > 0}}" class="admin-head-dot"></view>
+    </view>
+  </view>
+  <view class="summary-card admin-summary">
+    <view class="summary-label">待处理事项</view>
+    <view class="summary-value">{{pending + withdraw}}</view>
+    <view class="summary-foot"><text>订单审核 {{pending}}</text><text>提现审核 {{withdraw}}</text></view>
+  </view>
+  <view class="metric-grid">
+    <view class="metric-card"><view class="metric-label">订单总量</view><view class="metric-value">{{orderTotal}}</view><view class="metric-hint">全部订单</view></view>
+    <view class="metric-card"><view class="metric-label">已审核订单</view><view class="metric-value">{{approved}}</view><view class="metric-hint">已完成审核</view></view>
+    <view class="metric-card"><view class="metric-label">代理人数</view><view class="metric-value">{{merchantTotal}}</view><view class="metric-hint">启用 {{activeMerchants}} 人</view></view>
+    <view class="metric-card"><view class="metric-label">待打款提现</view><view class="metric-value">{{toPay}}</view><view class="metric-hint">通过审核待处理</view></view>
+  </view>
+  <view class="section-head"><view class="section-title">快捷操作</view></view>
+  <view class="quick-grid">
+    <view class="quick-item" bindtap="create"><image class="quick-image" src="/images/icons/goods.png" mode="aspectFit" /><view><view class="quick-name">创建订单</view><view class="quick-count">新建代付</view></view></view>
+    <view class="quick-item" bindtap="reviews"><image class="quick-image" src="/images/icons/examples.png" mode="aspectFit" /><view><view class="quick-name">付款审核</view><view class="quick-count">{{pending}} 笔待处理</view></view></view>
+    <view class="quick-item" bindtap="withdrawals"><image class="quick-image" src="/images/icons/usercenter.png" mode="aspectFit" /><view><view class="quick-name">提现审核</view><view class="quick-count">{{withdraw}} 笔待处理</view></view></view>
+    <view class="quick-item" bindtap="merchants"><image class="quick-image" src="/images/icons/business.png" mode="aspectFit" /><view><view class="quick-name">代理人监控</view><view class="quick-count">{{activeMerchants}} 人运营中</view></view></view>
+  </view>
+  <view class="section-head"><view class="section-title">运营提醒</view><view class="section-link" bindtap="reviews">查看全部</view></view>
+  <view class="card notice-card">
+    <view class="notice-row" wx:if="{{pending > 0}}" bindtap="reviews"><view class="notice-mark warning">审</view><view class="notice-copy"><view class="notice-title">有 {{pending}} 笔付款待审核</view><view class="notice-meta">客户已提交付款凭证，请及时处理</view></view><view class="task-arrow">›</view></view>
+    <view class="notice-row" wx:if="{{withdraw > 0}}" bindtap="withdrawals"><view class="notice-mark money">提</view><view class="notice-copy"><view class="notice-title">有 {{withdraw}} 笔提现待审核</view><view class="notice-meta">审核通过后进入打款流程</view></view><view class="task-arrow">›</view></view>
+    <view wx:if="{{!pending && !withdraw}}" class="notice-empty">当前暂无需要处理的事项</view>
+  </view>
+  <view class="section-head"><view class="section-title">待处理</view><view class="section-link" bindtap="reviews">全部</view></view>
+  <view class="card task-card"><view wx:if="{{!tasks.length}}" class="muted">暂无待处理事项</view><view wx:for="{{tasks}}" wx:key="id" class="task-item" bindtap="task" data-id="{{item.id}}"><view class="task-icon"><image src="/images/icons/examples.png" mode="aspectFit" /></view><view class="task-copy"><view class="task-name">{{item.item}}</view><view class="task-meta">{{item.id}} · 客户付款待审核</view></view><view class="task-arrow">›</view></view></view>
+  <view class="bottom-nav"><view class="bottom-tab active"><image class="nav-icon" src="/images/icons/home-active.png" mode="aspectFit" /><text>首页</text></view><view class="bottom-tab" bindtap="orders"><image class="nav-icon" src="/images/icons/goods.png" mode="aspectFit" /><text>订单</text></view><view class="bottom-tab" bindtap="withdrawals"><image class="nav-icon" src="/images/icons/usercenter.png" mode="aspectFit" /><text>提现</text></view><view class="bottom-tab" bindtap="settings"><image class="nav-icon" src="/images/icons/setting.svg" mode="aspectFit" /><text>我的</text></view></view>
+</view>

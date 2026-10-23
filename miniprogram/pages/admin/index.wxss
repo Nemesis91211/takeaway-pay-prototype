@@ -1,0 +1,26 @@
+.page { padding-bottom:150rpx; }
+.admin-page { padding-top:20rpx; }
+.admin-head { display:flex; align-items:center; justify-content:space-between; margin:0 4rpx 22rpx; }
+.admin-kicker { color:#9b7500; font-size:23rpx; font-weight:600; letter-spacing:1rpx; }
+.admin-title { margin-top:5rpx; color:#202124; font-size:40rpx; font-weight:700; }
+.admin-head-action { position:relative; display:flex; align-items:center; justify-content:center; width:66rpx; height:66rpx; border:1rpx solid #e7e8ea; border-radius:21rpx; background:#fff; }
+.admin-head-action image { width:35rpx; height:35rpx; opacity:.72; }
+.admin-head-dot { position:absolute; top:10rpx; right:10rpx; width:12rpx; height:12rpx; border:3rpx solid #fff; border-radius:50%; background:#d45245; }
+.admin-summary { background:linear-gradient(135deg,#202124 0%,#2d2f33 100%); }
+.metric-grid { display:grid; grid-template-columns:1fr 1fr; gap:14rpx; margin-top:16rpx; }
+.metric-card { min-height:142rpx; padding:20rpx 22rpx; border:1rpx solid #eceef0; border-radius:18rpx; background:#fff; box-sizing:border-box; }
+.metric-label { color:#777b81; font-size:23rpx; }
+.metric-value { margin-top:9rpx; color:#24262a; font-size:39rpx; font-weight:700; line-height:1; }
+.metric-hint { margin-top:12rpx; color:#a1a4a8; font-size:21rpx; }
+.quick-grid { gap:14rpx; }
+.quick-item { min-height:96rpx; box-sizing:border-box; }
+.notice-card { padding:4rpx 24rpx; }
+.notice-row { display:flex; align-items:center; padding:20rpx 0; border-bottom:1rpx solid #f0f1f2; }
+.notice-row:last-child { border-bottom:0; }
+.notice-mark { width:48rpx; height:48rpx; margin-right:15rpx; border-radius:15rpx; font-size:22rpx; line-height:48rpx; text-align:center; }
+.notice-mark.warning { background:#fff2c7; color:#946e00; }
+.notice-mark.money { background:#eaf6ee; color:#328054; }
+.notice-copy { flex:1; }
+.notice-title { color:#2b2d31; font-size:26rpx; }
+.notice-meta { margin-top:5rpx; color:#989ba0; font-size:22rpx; }
+.notice-empty { padding:23rpx 0; color:#92959a; font-size:24rpx; text-align:center; }

@@ -1,0 +1,62 @@
+.withdrawals-page { padding-top: 18rpx; }
+.withdraw-head { display:flex; align-items:center; justify-content:space-between; margin:0 4rpx 20rpx; }
+.eyebrow { color:#a17b00; font-size:23rpx; font-weight:600; letter-spacing:1rpx; }
+.page-title { margin-top:6rpx; color:#202124; font-size:44rpx; font-weight:700; letter-spacing:-1rpx; }
+.refresh-button { display:flex; align-items:center; justify-content:center; width:68rpx; height:68rpx; margin:0; padding:0; border:1rpx solid #e4e5e7; border-radius:18rpx; background:#fff; color:#70747a; font-size:40rpx; line-height:1; }
+.summary-layout { display:flex; gap:14rpx; margin-bottom:18rpx; }
+.summary-main { flex:1; min-height:180rpx; padding:26rpx; border-radius:20rpx; background:#202124; color:#fff; box-sizing:border-box; }
+.summary-label { color:#b9bdc4; font-size:24rpx; }
+.summary-amount { margin-top:10rpx; font-size:48rpx; font-weight:700; letter-spacing:1rpx; }
+.summary-foot { display:flex; justify-content:space-between; margin-top:26rpx; padding-top:18rpx; border-top:1rpx solid rgba(255,255,255,.12); color:#d1d4d8; font-size:22rpx; }
+.summary-side { display:flex; flex:0 0 196rpx; flex-direction:column; gap:14rpx; }
+.mini-summary { display:flex; flex:1; flex-direction:column; justify-content:space-between; padding:20rpx; border-radius:18rpx; background:#fff; color:#85898e; font-size:22rpx; box-shadow:0 2rpx 12rpx rgba(45,48,54,.035); }
+.mini-value { color:#2b2d31; font-size:32rpx; font-weight:700; }
+.muted-value { color:#b34e4e; }
+.search-box { display:flex; align-items:center; height:78rpx; margin-bottom:16rpx; padding:0 20rpx; border:1rpx solid #e7e8ea; border-radius:16rpx; background:#fff; box-sizing:border-box; }
+.search-box image { flex:none; width:34rpx; height:34rpx; margin-right:12rpx; opacity:.65; }
+.search-box input { flex:1; height:78rpx; color:#303237; font-size:26rpx; }
+.clear-search { padding:8rpx; color:#a1a4a8; font-size:34rpx; line-height:1; }
+.status-tabs { display:flex; width:100%; margin-bottom:18rpx; white-space:nowrap; }
+.status-tab { display:inline-flex; align-items:center; height:62rpx; margin-right:12rpx; padding:0 20rpx; border-radius:30rpx; background:#fff; color:#7c8086; font-size:24rpx; box-sizing:border-box; }
+.status-tab.active { background:#202124; color:#fff; font-weight:600; }
+.tab-count { margin-left:8rpx; color:#a3a6aa; font-size:21rpx; }
+.status-tab.active .tab-count { color:#e4e5e7; }
+.list-head { display:flex; align-items:center; justify-content:space-between; margin:4rpx 4rpx 12rpx; color:#2a2c30; font-size:30rpx; font-weight:700; }
+.list-total { color:#a1a4a8; font-size:23rpx; font-weight:400; }
+.withdraw-card { margin-bottom:16rpx; padding:24rpx; border-radius:18rpx; background:#fff; box-shadow:0 2rpx 12rpx rgba(45,48,54,.035); }
+.card-top { display:flex; align-items:center; justify-content:space-between; }
+.agent-line { display:flex; align-items:center; min-width:0; }
+.agent-name { max-width:350rpx; overflow:hidden; color:#2b2d31; font-size:27rpx; font-weight:600; text-overflow:ellipsis; white-space:nowrap; }
+.card-time { margin-top:4rpx; color:#9da0a5; font-size:22rpx; }
+.status-tag { display:inline-block; padding:7rpx 14rpx; border-radius:20rpx; background:#fff3c8; color:#946f00; font-size:22rpx; white-space:nowrap; }
+.status-tag.green { background:#e8f7eb; color:#2d8750; }
+.status-tag.red { background:#ffebeb; color:#b84c4c; }
+.amount-line { display:flex; align-items:baseline; justify-content:space-between; margin-top:22rpx; }
+.amount { color:#9b7100; font-size:40rpx; font-weight:700; letter-spacing:.5rpx; }
+.withdraw-id { color:#a1a4a8; font-size:21rpx; }
+.meta-line { display:flex; align-items:center; justify-content:space-between; margin-top:14rpx; padding-top:14rpx; border-top:1rpx solid #f0f1f2; color:#777b81; font-size:23rpx; }
+.note-line { margin-top:12rpx; color:#8b8e93; font-size:22rpx; }
+.card-actions, .sheet-actions { display:flex; gap:12rpx; margin-top:18rpx; }
+.card-actions button, .sheet-actions button { flex:1; height:70rpx; margin:0; border-radius:13rpx; font-size:25rpx; font-weight:600; }
+.action-primary { background:#ffcf19; color:#322a00; }
+.action-secondary { border:1rpx solid #eadca5; background:#fffaf0; color:#806300; }
+.action-primary.full { flex:1; }
+.detail-hint { margin-top:18rpx; padding-top:14rpx; border-top:1rpx solid #f0f1f2; color:#9b7500; font-size:23rpx; text-align:right; }
+.detail-hint text { margin-left:5rpx; font-size:30rpx; vertical-align:-2rpx; }
+.empty-state { display:flex; flex-direction:column; align-items:center; margin-top:10rpx; padding:78rpx 20rpx; border-radius:18rpx; background:#fff; color:#7e8287; font-size:27rpx; }
+.empty-state text { margin-top:10rpx; color:#adb0b4; font-size:23rpx; }
+.empty-icon { display:flex; align-items:center; justify-content:center; width:74rpx; height:74rpx; margin-bottom:16rpx; border-radius:50%; background:#f5f6f7; color:#a8acb1; font-size:42rpx; }
+.modal-mask { position:fixed; top:0; right:0; bottom:0; left:0; z-index:30; display:flex; align-items:flex-end; background:rgba(24,25,27,.42); }
+.detail-sheet { width:100%; padding:28rpx 28rpx calc(30rpx + env(safe-area-inset-bottom)); border-radius:28rpx 28rpx 0 0; background:#fff; box-sizing:border-box; }
+.sheet-head { display:flex; align-items:flex-start; justify-content:space-between; }
+.sheet-title { color:#24262a; font-size:34rpx; font-weight:700; }
+.sheet-id { margin-top:6rpx; color:#999da2; font-size:22rpx; }
+.sheet-close { padding:0 6rpx; color:#999da2; font-size:42rpx; line-height:34rpx; }
+.detail-hero { display:flex; align-items:center; justify-content:space-between; margin:28rpx 0 22rpx; padding:22rpx; border-radius:16rpx; background:#faf6e7; }
+.detail-amount { color:#9b7100; font-size:46rpx; font-weight:700; }
+.detail-section { padding:4rpx 4rpx 0; }
+.detail-row { display:flex; align-items:center; justify-content:space-between; min-height:62rpx; border-bottom:1rpx solid #f1f2f3; color:#85898e; font-size:25rpx; }
+.detail-row text:last-child { max-width:430rpx; overflow:hidden; color:#303237; text-align:right; text-overflow:ellipsis; white-space:nowrap; }
+.detail-note { display:flex; flex-direction:column; gap:8rpx; padding-top:16rpx; color:#85898e; font-size:25rpx; }
+.detail-note text:last-child { color:#303237; line-height:38rpx; }
+.sheet-actions { margin-top:24rpx; }

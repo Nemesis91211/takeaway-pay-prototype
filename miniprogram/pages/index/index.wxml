@@ -1,0 +1,24 @@
+<view wx:if="{{invalid}}" class="page-shell invalid-order"><view class="status-card"><view class="status-title">订单链接无效</view><view class="notice-box"><view>请通过商家或管理员分享的有效链接打开订单。</view><view>登录功能暂未启用，订单权限由服务端分享链接校验。</view></view></view></view>
+<view wx:else class="page-shell" style="--primary: {{theme.primary}}; --primary-text: {{theme.primaryText}}; --notice: {{theme.notice}};">
+  <canvas class="share-canvas" canvas-id="shareCanvas" width="500" height="400"></canvas>
+  <view class="sender-row"><view class="avatar"><view class="avatar-ear left-ear"></view><view class="avatar-ear right-ear"></view><view class="avatar-face"><view class="eye"></view><view class="eye right-eye"></view></view></view><view><view class="sender-name">{{order.senderName}}</view><view class="sender-message">{{order.greeting}}</view></view></view>
+  <view class="status-card">
+    <block wx:if="{{!status.expired}}">
+      <view class="status-title active-status-title">需付款</view>
+      <view class="amount active-amount"><text class="currency">¥</text>{{order.activeAmount}}</view>
+      <view class="time-row"><text>支付剩余时间</text><view class="time-block">{{status.hours}}</view><text class="time-separator">:</text><view class="time-block">{{status.minutes}}</view><text class="time-separator">:</text><view class="time-block">{{status.seconds}}</view></view>
+      <view class="notice-box active-notice"><view class="notice-title">付款须知</view><view>1. 代付订单创建成功后15分钟内未付款，订单会自动取消，你可以重新下单。</view><view>2. 当代付订单退款成功后，实付金额将原路退还代付人。</view></view>
+      <button class="primary-button active-share-button" bindtap="showShareGuide">发给微信好友</button>
+      <button wx:if="{{order.orderId && order.status === '待客户付款'}}" class="primary-button notify-paid-button" bindtap="notifyPaid" disabled="{{paidNotice}}">{{paidNotice ? '已提交付款通知' : '我已付款，通知管理员'}}</button>
+      <view class="self-pay" bindtap="goToPayment">自己付款 <text>›</text></view>
+    </block>
+    <block wx:else>
+      <view class="status-title">代付已取消</view><view class="amount"><text class="currency">¥</text>{{order.amount}}</view><view class="notice-box"><view class="notice-title">付款须知</view><view>1. 代付订单创建成功后15分钟内未付款，订单会自动取消，你可以重新下单。</view><view>2. 当代付订单退款成功后，实付金额将原路退还代付人。</view></view><button class="primary-button" bindtap="acknowledge">知道了</button>
+    </block>
+  </view>
+  <view class="order-card"><view class="merchant-row"><view class="merchant">{{status.expired ? order.merchant : order.activeMerchant}}</view><view wx:if="{{status.expired}}" class="merchant-arrow">›</view><view wx:else class="privacy-switch"><text>对好友隐藏商品</text><view class="switch-track"><view></view></view></view></view><view class="item-row"><view class="food-visual"><view class="food-dot dot-one"></view><view class="food-dot dot-two"></view><view class="food-dot dot-three"></view><view class="food-bowl">🍱</view></view><view class="item-main"><view class="item-name">{{status.expired ? order.itemName : order.activeItemName}}</view><view class="item-detail">{{status.expired ? order.itemDetail : order.activeItemDetail}}</view><view class="item-count">{{order.quantity}}</view></view><view class="price-column"><view class="item-price">¥{{status.expired ? order.amount : order.activeAmount}}</view><view class="original-price">{{status.expired ? order.originalPrice : order.activeOriginalPrice}}</view></view></view></view>
+  <view class="share-guide-mask" wx:if="{{showShareGuide}}" catchtap="hideShareGuide">
+    <view class="guide-pointer" catchtap="noop"><view class="guide-line"></view><view class="guide-dot"></view></view>
+    <view class="guide-content" catchtap="noop"><view class="guide-text"><view>点击右上角按钮</view><view>分享给朋友</view></view><view class="guide-close" bindtap="hideShareGuide">知道了</view></view>
+  </view>
+</view>

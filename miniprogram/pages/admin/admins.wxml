@@ -1,0 +1,25 @@
+<view class="page">
+  <view class="dashboard-head"><view><view class="head-title">管理员账号</view><view class="head-caption">在线开通与管理管理员账号</view></view></view>
+  <view class="monitor-summary"><view><text class="summary-number">{{total}}</text><text>全部管理员</text></view><view><text class="summary-number">{{enabledCount}}</text><text>启用中</text></view><view><text class="summary-number">{{superCount}}</text><text>超级管理员</text></view></view>
+  <button class="primary" bindtap="showAdd">＋ 新增管理员</button>
+  <view class="section-head"><view class="section-title">管理员列表</view><view class="section-link">{{admins.length}} 人</view></view>
+  <view wx:for="{{admins}}" wx:key="id" class="agent-card">
+    <view class="agent-card-head"><view class="agent-avatar"><image class="{{item.avatar ? 'avatar-full' : ''}}" src="{{item.avatar || '/images/icons/usercenter.png'}}" mode="{{item.avatar ? 'aspectFill' : 'aspectFit'}}"/></view><view class="agent-intro"><view class="agent-name">{{item.name}}<text wx:if="{{item.isSelf}}" class="self-tag">当前账号</text></view><view class="agent-account">账号：{{item.username}}</view></view><text class="tag {{item.enabled ? 'green' : 'gray'}}">{{item.enabled ? '启用中' : '已停用'}}</text></view>
+    <view class="agent-alert"><text>{{item.roleLabel}}</text><text>{{item.phone || '未填写手机号'}}</text></view>
+    <view class="agent-card-foot"><text>{{item.email || '未填写邮箱'}}</text><text>{{item.department || '未填写部门'}}</text></view>
+    <view class="admin-actions"><button class="secondary" data-id="{{item.id}}" bindtap="edit">编辑资料</button><button class="secondary" data-id="{{item.id}}" bindtap="resetPassword">重置密码</button><button class="secondary" data-id="{{item.id}}" bindtap="toggle">{{item.enabled ? '停用账号' : '启用账号'}}</button></view>
+  </view>
+  <view wx:if="{{!admins.length}}" class="empty-state">暂无管理员账号</view>
+  <view wx:if="{{showForm}}" class="modal-mask"><view class="modal-card">
+    <view class="modal-title">{{formTitle}}</view><view class="modal-subtitle">带 <text class="required">*</text> 为必填字段</view>
+    <view class="field"><text class="label">登录账号 <text class="required">*</text></text><input class="input" data-key="username" bindinput="input" value="{{username}}" placeholder="例如：admin_02" /></view>
+    <view class="field"><text class="label">管理员姓名 <text class="required">*</text></text><input class="input" data-key="name" bindinput="input" value="{{name}}" placeholder="请输入姓名" /></view>
+    <view class="field"><text class="label">手机号 <text class="optional">选填</text></text><input class="input" type="number" data-key="phone" bindinput="input" value="{{phone}}" placeholder="用于联系和通知" /></view>
+    <view class="field"><text class="label">邮箱 <text class="optional">选填</text></text><input class="input" data-key="email" bindinput="input" value="{{email}}" placeholder="用于接收运营通知" /></view>
+    <view class="field"><text class="label">所属部门 <text class="optional">选填</text></text><input class="input" data-key="department" bindinput="input" value="{{department}}" placeholder="例如：平台运营部" /></view>
+    <view wx:if="{{!editingId}}" class="field"><text class="label">账号权限</text><picker mode="selector" range="{{roleOptions}}" value="{{roleIndex}}" bindchange="chooseRole"><view class="select">{{roleOptions[roleIndex]}}</view></picker></view>
+    <view wx:if="{{!editingId}}" class="notice compact-notice">系统将自动生成初始密码，创建成功后只展示一次。</view>
+    <view class="modal-actions"><button class="ghost" bindtap="closeForm">取消</button><button class="primary" bindtap="save">保存</button></view>
+  </view></view>
+  <button class="ghost" bindtap="back">返回我的</button>
+</view>
