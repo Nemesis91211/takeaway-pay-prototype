@@ -31,21 +31,37 @@ Page({
   threshold() { wx.showActionSheet({ itemList: ['1 笔', '3 笔', '5 笔', '10 笔'], success: ({ tapIndex }) => { const value = [1, 3, 5, 10][tapIndex]; updateSettings({ pendingAlertThreshold: value }); this.setData({ 'settings.pendingAlertThreshold': value }) } }) },
   editProfile() { this.setData({ profileForm: this.getProfileForm(this.data.user), showProfileEditor: true }) },
   changeAvatar() {
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      success: ({ tempFilePaths }) => {
-        const filePath = tempFilePaths && tempFilePaths[0]
-        if (!filePath) return
+    const pickImage = () => {
+      const handler = ({ tempFilePath }) => {
+        if (!tempFilePath) return
+        // 立即用临时路径回填，让用户马上看到头像变化
+        this.setData({ 'user.avatar': tempFilePath })
+        // 后台异步上传到云存储，成功后用 fileID 持久化
         wx.showLoading({ title: '上传中', mask: true })
-        api.uploadAvatar(filePath).then(fileID => {
+        api.uploadAvatar(tempFilePath).then(fileID => {
           updateProfile({ avatar: fileID })
           auth.setSession({ ...auth.getSession(), avatar: fileID })
-          this.setData({ 'user.avatar': fileID })
           toast('头像已更新', 'success')
-        }).catch(() => toast('头像上传失败，请重试')).then(() => wx.hideLoading())
+        }).catch(() => toast('头像上传失败，请稍后重试')).then(() => wx.hideLoading())
       }
-    })
+      // 优先用 wx.chooseMedia（基础库 2.10.0+），降级用 wx.chooseImage
+      if (wx.chooseMedia) {
+        wx.chooseMedia({
+          count: 1,
+          mediaType: ['image'],
+          sizeType: ['compressed'],
+          success: res => handler(res.tempFiles[0]),
+          fail: () => {}
+        })
+      } else {
+        wx.chooseImage({
+          count: 1,
+          sizeType: ['compressed'],
+          success: ({ tempFilePaths }) => handler({ tempFilePath: tempFilePaths && tempFilePaths[0] })
+        })
+      }
+    }
+    pickImage()
   },
   inputProfile(e) { this.setData({ [`profileForm.${e.currentTarget.dataset.key}`]: e.detail.value }) },
   cancelProfile() { this.setData({ showProfileEditor: false }) },
